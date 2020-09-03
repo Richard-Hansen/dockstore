@@ -24,8 +24,8 @@ components:
           type: object
       type: object
     Checksum:
-      description: 'A production (immutable) tool version is required to have a hashcode. Not required otherwise, but might be useful to detect changes. '
-      example: '[{checksum=ea2a5db69bd20a42976838790bc29294df3af02b, type=sha1}]'
+      description: A production (immutable) tool version is required to have a hashcode. Not required otherwise, but might be useful to detect changes.  This exposes the hashcode for specific image versions to verify that the container version pulled is actually the version that was indexed by the registry.
+      example: '[{checksum=77af4d6b9913e693e8d0b4b294fa62ade6054e6b2f1ffb617ac955dd63fb0182, type=sha256}]'
       properties:
         checksum:
           description: 'The hex-string encoded checksum for the data. '
@@ -574,7 +574,7 @@ components:
         uri:
           description: The Git URI
           type: string
-        workflowVersionId:
+        versionId:
           description: Id of the Dockstore entry's workflowVersion
           format: int64
           type: integer
@@ -583,7 +583,7 @@ components:
         - descriptorRelativePathInGit
         - entryId
         - uri
-        - workflowVersionId
+        - versionId
       type: object
     LanguageParsingResponse:
       description: Response from the external lambda parsing service
@@ -3778,7 +3778,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Aliasable'
+                $ref: '#/components/schemas/Entry'
           description: default response
       security:
         - bearer: []
@@ -6659,7 +6659,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Entry'
+                $ref: '#/components/schemas/Workflow'
           description: default response
       security:
         - bearer: []
@@ -6685,7 +6685,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Workflow'
+                $ref: '#/components/schemas/Entry'
           description: default response
       security:
         - bearer: []
@@ -6811,26 +6811,6 @@ paths:
                   $ref: '#/components/schemas/Workflow'
                 type: array
           description: default response
-      tags:
-        - workflows
-  /workflows/parsedInformation:
-    post:
-      description: Dummy endpoint for now to get the Dockstore web service to add the models to the openapi.yaml
-      operationId: postParsedInformation
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/LanguageParsingResponse'
-        description: Created user object
-        required: true
-      responses:
-        default:
-          content:
-            application/json: {}
-          description: default response
-      security:
-        - bearer: []
       tags:
         - workflows
   /workflows/path/entry/{repository}:
@@ -7956,6 +7936,41 @@ paths:
                   $ref: '#/components/schemas/WorkflowVersion'
                 type: array
                 uniqueItems: true
+          description: default response
+      security:
+        - bearer: []
+      tags:
+        - workflows
+  /workflows/{workflowId}/workflowVersions/{workflowVersionId}/parsedInformation:
+    post:
+      description: Language parsing lambda calls this endpoint to update parsed information for this version
+      operationId: postParsedInformation
+      parameters:
+        - description: Workflow to retrieve the version from.
+          in: path
+          name: workflowId
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - description: Workflow version to retrieve the version from.
+          in: path
+          name: workflowVersionId
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LanguageParsingResponse'
+        description: Created user object
+        required: true
+      responses:
+        default:
+          content:
+            application/json: {}
           description: default response
       security:
         - bearer: []
