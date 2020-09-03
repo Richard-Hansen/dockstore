@@ -24,8 +24,8 @@ components:
           type: object
       type: object
     Checksum:
-      description: A production (immutable) tool version is required to have a hashcode. Not required otherwise, but might be useful to detect changes.  This exposes the hashcode for specific image versions to verify that the container version pulled is actually the version that was indexed by the registry.
-      example: '[{checksum=77af4d6b9913e693e8d0b4b294fa62ade6054e6b2f1ffb617ac955dd63fb0182, type=sha256}]'
+      description: 'A production (immutable) tool version is required to have a hashcode. Not required otherwise, but might be useful to detect changes. '
+      example: '[{checksum=ea2a5db69bd20a42976838790bc29294df3af02b, type=sha1}]'
       properties:
         checksum:
           description: 'The hex-string encoded checksum for the data. '
@@ -566,6 +566,11 @@ components:
           description: Id of the Dockstore entry
           format: int64
           type: integer
+        sourceFiles:
+          description: List of SourceFiles that will be required for parsing hosted entries from Dockstore
+          items:
+            $ref: '#/components/schemas/SourceFile'
+          type: array
         uri:
           description: The Git URI
           type: string
@@ -583,7 +588,16 @@ components:
     LanguageParsingResponse:
       description: Response from the external lambda parsing service
       properties:
+        author:
+          description: Author found from parsing the version (may possibly be different from what will be stored in Dockstore
+          type: string
         clonedRepositoryAbsolutePath:
+          type: string
+        description:
+          description: Description found from parsing the version (may possibly be different from what will be stored in Dockstore
+          type: string
+        email:
+          description: Email found from parsing the version (may possibly be different from what will be stored in Dockstore
           type: string
         languageParsingRequest:
           $ref: '#/components/schemas/LanguageParsingRequest'
@@ -593,8 +607,14 @@ components:
           items:
             type: string
           type: array
-        valid:
-          type: boolean
+        sourceFiles:
+          description: List of SourceFiles returned after parsing a non-hosted entry
+          items:
+            $ref: '#/components/schemas/SourceFile'
+          type: array
+        versionTypeValidation:
+          $ref: '#/components/schemas/VersionTypeValidation'
+      type: object
     LicenseInformation:
       properties:
         licenseName:
@@ -1478,6 +1498,15 @@ components:
           items:
             $ref: '#/components/schemas/ParsedInformation'
           type: array
+      type: object
+    VersionTypeValidation:
+      properties:
+        message:
+          additionalProperties:
+            type: string
+          type: object
+        valid:
+          type: boolean
       type: object
     VersionVerifiedPlatform:
       properties:
@@ -2509,7 +2538,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Entry'
+                $ref: '#/components/schemas/Tool'
           description: default response
       security:
         - bearer: []
@@ -6656,7 +6685,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Entry'
+                $ref: '#/components/schemas/Workflow'
           description: default response
       security:
         - bearer: []
@@ -6786,7 +6815,7 @@ paths:
         - workflows
   /workflows/parsedInformation:
     post:
-      description: Handle a release of a repository on GitHub. Will create a workflow/service and version when necessary.
+      description: Dummy endpoint for now to get the Dockstore web service to add the models to the openapi.yaml
       operationId: postParsedInformation
       requestBody:
         content:
