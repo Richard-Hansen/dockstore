@@ -563,6 +563,18 @@ components:
         branch:
           description: The Git branch/tag
           type: string
+        descriptorLanguage:
+          description: The language of the workflow
+          enum:
+            - CWL
+            - WDL
+            - gxformat2
+            - SWL
+            - NFL
+            - service
+            
+            
+          type: string
         descriptorRelativePathInGit:
           description: The relative path to the primary descriptor (relative to the base in Git)
           type: string
@@ -2568,7 +2580,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Entry'
+                $ref: '#/components/schemas/Tool'
           description: default response
       security:
         - bearer: []
@@ -3782,7 +3794,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Entry'
+                $ref: '#/components/schemas/Aliasable'
           description: default response
       security:
         - bearer: []
@@ -7947,7 +7959,7 @@ paths:
         - workflows
   /workflows/{workflowId}/workflowVersions/{workflowVersionId}/parsedInformation:
     post:
-      description: Language parsing lambda calls this endpoint to update parsed information for this version
+      description: Language parser calls this endpoint to update parsed information for this version
       operationId: postParsedInformation
       parameters:
         - description: Workflow to retrieve the version from.
