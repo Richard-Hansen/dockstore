@@ -65,10 +65,10 @@ POM as their parent.
         <httpcomponents.version>4.5.12</httpcomponents.version>
         <httpcore.version>4.4.13</httpcore.version>
         <jetty-servlet.version>9.4.29.v20200521</jetty-servlet.version>
-        <netty.version>4.1.33.Final</netty.version>
-        <scala.version>2.12.8</scala.version>
-        <cromwell.version>41</cromwell.version>
-        <jackson.version>2.10.4</jackson.version>
+        <netty.version>4.1.53.Final</netty.version>
+        <scala.version>2.13.3</scala.version>
+        <cromwell.version>53.1</cromwell.version>
+        <jackson.version>2.11.3</jackson.version>
         <jackson.major.version>2.10.4</jackson.major.version>
 
         <skipTests>false</skipTests>
@@ -143,7 +143,7 @@ POM as their parent.
             <dependency>
                 <groupId>com.typesafe</groupId>
                 <artifactId>config</artifactId>
-                <version>1.3.3</version>
+                <version>1.4.1</version>
             </dependency>
             <dependency>
                 <groupId>org.broadinstitute</groupId>
@@ -168,8 +168,8 @@ POM as their parent.
 
             <dependency>
                 <groupId>org.typelevel</groupId>
-                <artifactId>cats-core_2.12</artifactId>
-                <version>1.5.0</version>
+                <artifactId>cats-core_2.13</artifactId>
+                <version>2.3.0-M1</version>
             </dependency>
 
             <dependency>
@@ -263,7 +263,7 @@ POM as their parent.
             <dependency>
                 <groupId>org.reactivestreams</groupId>
                 <artifactId>reactive-streams</artifactId>
-                <version>1.0.2</version>
+                <version>1.0.3</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
@@ -292,21 +292,21 @@ POM as their parent.
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>${jackson.major.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>${jackson.major.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-yaml</artifactId>
-                <version>${jackson.major.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--                <artifactId>jackson-annotations</artifactId>-->
+<!--                <version>${jackson.major.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.fasterxml.jackson.datatype</groupId>-->
+<!--                <artifactId>jackson-datatype-jsr310</artifactId>-->
+<!--                <version>${jackson.major.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.fasterxml.jackson.dataformat</groupId>-->
+<!--                <artifactId>jackson-dataformat-yaml</artifactId>-->
+<!--                <version>${jackson.major.version}</version>-->
+<!--            </dependency>-->
 
             <dependency>
                 <groupId>com.github.jsonld-java</groupId>
@@ -333,7 +333,7 @@ POM as their parent.
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-text</artifactId>
-                <version>1.8</version>
+                <version>1.9</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.logging</groupId>
@@ -493,7 +493,7 @@ POM as their parent.
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>3.10</version>
+                <version>3.11</version>
             </dependency>
             <dependency>
                 <groupId>org.codehaus.jackson</groupId>
@@ -503,7 +503,7 @@ POM as their parent.
             <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
-                <version>2.8.2</version>
+                <version>2.8.6</version>
             </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
@@ -518,7 +518,7 @@ POM as their parent.
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
-                <version>2.6</version>
+                <version>2.8.0</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/cloud.localstack/localstack-utils -->
             <dependency>
@@ -679,7 +679,7 @@ POM as their parent.
             <dependency>
                 <groupId>com.google.http-client</groupId>
                 <artifactId>google-http-client</artifactId>
-                <version>1.28.0</version>
+                <version>1.38.0</version>
             </dependency>
             <dependency>
                 <groupId>org.codehaus.jackson</groupId>
@@ -694,7 +694,7 @@ POM as their parent.
             <dependency>
                 <groupId>org.scala-lang.modules</groupId>
                 <artifactId>scala-xml_2.12</artifactId>
-                <version>1.1.1</version>
+                <version>2.0.0-M2</version>
             </dependency>
             <dependency>
                 <groupId>org.scala-lang</groupId>
@@ -704,7 +704,7 @@ POM as their parent.
             <dependency>
                 <groupId>org.scalacheck</groupId>
                 <artifactId>scalacheck_2.12</artifactId>
-                <version>1.12.5</version>
+                <version>1.15.0</version>
             </dependency>
             <dependency>
                 <groupId>org.typelevel</groupId>
@@ -793,13 +793,13 @@ POM as their parent.
             <dependency>
                 <groupId>com.google.oauth-client</groupId>
                 <artifactId>google-oauth-client</artifactId>
-                <version>1.28.0</version>
+                <version>1.31.2</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.google.http-client/google-http-client-jackson -->
             <dependency>
                 <groupId>com.google.http-client</groupId>
                 <artifactId>google-http-client-jackson</artifactId>
-                <version>1.28.0</version>
+                <version>1.38.0</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
             <dependency>
