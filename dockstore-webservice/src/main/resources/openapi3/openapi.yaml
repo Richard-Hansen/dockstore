@@ -6889,7 +6889,7 @@ components:
         id:
           type: integer
           format: int64
-        input_file_formats:
+        inputFileFormats:
           type: array
           items:
             $ref: '#/components/schemas/FileFormat'
@@ -6930,7 +6930,7 @@ components:
           type: string
         namespace:
           type: string
-        output_file_formats:
+        outputFileFormats:
           type: array
           items:
             $ref: '#/components/schemas/FileFormat'
@@ -7011,7 +7011,7 @@ components:
         id:
           type: integer
           format: int64
-        input_file_formats:
+        inputFileFormats:
           type: array
           items:
             $ref: '#/components/schemas/FileFormat'
@@ -7038,7 +7038,7 @@ components:
           $ref: '#/components/schemas/Entry'
         metadataFromVersion:
           $ref: '#/components/schemas/Version'
-        output_file_formats:
+        outputFileFormats:
           type: array
           items:
             $ref: '#/components/schemas/FileFormat'
@@ -7094,7 +7094,7 @@ components:
         id:
           type: integer
           format: int64
-        input_file_formats:
+        inputFileFormats:
           type: array
           items:
             $ref: '#/components/schemas/FileFormat'
@@ -7122,7 +7122,7 @@ components:
           writeOnly: true
         metadataFromVersion:
           $ref: '#/components/schemas/Version'
-        output_file_formats:
+        outputFileFormats:
           type: array
           items:
             $ref: '#/components/schemas/FileFormat'
@@ -8432,7 +8432,7 @@ components:
         id:
           type: integer
           format: int64
-        input_file_formats:
+        inputFileFormats:
           type: array
           items:
             $ref: '#/components/schemas/FileFormat'
@@ -8470,7 +8470,7 @@ components:
           - DOCKSTORE_YML
         organization:
           type: string
-        output_file_formats:
+        outputFileFormats:
           type: array
           items:
             $ref: '#/components/schemas/FileFormat'
