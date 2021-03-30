@@ -21,6 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -79,6 +80,7 @@ import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -181,6 +183,22 @@ public class EntryResource implements AuthenticatedResourceInterface, AliasableR
 
         List<VersionVerifiedPlatform> verifiedVersions = versionDAO.findEntryVersionsWithVerifiedPlatforms(entryId);
         return verifiedVersions;
+    }
+
+    @GET
+    @Path("/{entryId}/versions")
+    @UnitOfWork
+    @ApiOperation(value = "Return all versions in an entry",  hidden = true)
+    @Operation(operationId = "getEntrysVersions", description = "Return all versions in an entry", security = @SecurityRequirement(name = OPENAPI_JWT_SECURITY_DEFINITION_NAME))
+    public Set<? extends Version> getEntrysVersions(@Parameter(hidden = true, name = "user")@Auth Optional<User> user,
+            @Parameter(name = "entryId", description = "id of the entry", required = true, in = ParameterIn.PATH) @PathParam("entryId") Long entryId) {
+        Entry<? extends Entry, ? extends Version> entry = toolDAO.getGenericEntryById(entryId);
+        checkEntry(entry);
+
+        checkEntryPermissions(user, entry);
+
+        Hibernate.initialize(entry.getWorkflowVersions());
+        return entry.getWorkflowVersions();
     }
 
     @GET

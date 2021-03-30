@@ -73,6 +73,7 @@ import io.swagger.client.model.ToolVersion;
 import io.swagger.client.model.ToolVersionV1;
 import io.swagger.client.model.User;
 import io.swagger.client.model.Workflow;
+import io.swagger.client.model.WorkflowVersion;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
@@ -778,13 +779,15 @@ public class SwaggerClientIT extends BaseIT {
     public void testUploadZip() {
         final ApiClient webClient = getWebClient();
         final HostedApi hostedApi = new HostedApi(webClient);
+        final WorkflowsApi workflowsApi = new WorkflowsApi(webClient);
         final Workflow hostedWorkflow = hostedApi.createHostedWorkflow("hosted", "something", "wdl", "something", null);
         // Created workflow, no versions
         Assert.assertEquals(0, hostedWorkflow.getWorkflowVersions().size());
         final String smartseqZip = ResourceHelpers.resourceFilePath("smartseq.zip");
         final Workflow updatedWorkflow = hostedApi.addZip(hostedWorkflow.getId(), new File(smartseqZip));
         // A version should now exist.
-        Assert.assertEquals(1, updatedWorkflow.getWorkflowVersions().size());
+
+        Assert.assertEquals(1, workflowsApi.getWorkflowVersions(updatedWorkflow.getId()).size());
     }
 
     /**
@@ -868,9 +871,10 @@ public class SwaggerClientIT extends BaseIT {
         // Edit should now work!
         final Workflow workflow = user2HostedApi
             .editHostedWorkflow(hostedWorkflow1.getId(), Collections.singletonList(createCwlWorkflow()));
+        List<WorkflowVersion> workflowVersions = user2WorkflowsApi.getWorkflowVersions(workflow.getId());
 
         // Deleting the version should not fail
-        Workflow deleteVersionFromWorkflow1 = user2HostedApi.deleteHostedWorkflowVersion(hostedWorkflow1.getId(), workflow.getWorkflowVersions().get(0).getName());
+        Workflow deleteVersionFromWorkflow1 = user2HostedApi.deleteHostedWorkflowVersion(hostedWorkflow1.getId(), workflowVersions.get(0).getName());
         assertTrue(deleteVersionFromWorkflow1.getWorkflowVersions().size() == 0);
 
         // Publishing the workflow should fail
