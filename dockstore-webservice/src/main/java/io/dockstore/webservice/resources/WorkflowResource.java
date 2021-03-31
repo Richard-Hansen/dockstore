@@ -841,7 +841,9 @@ public class WorkflowResource extends AbstractWorkflowResource<Workflow>
 
         checkCanShareWorkflow(user, workflow);
 
-        return publishWorkflow(workflow, request.getPublish());
+        Workflow publishedWorkflow = publishWorkflow(workflow, request.getPublish());
+        Hibernate.initialize(publishedWorkflow.getWorkflowVersions());
+        return publishedWorkflow;
     }
 
     @GET
@@ -1826,7 +1828,9 @@ public class WorkflowResource extends AbstractWorkflowResource<Workflow>
         entry.setCheckerWorkflow(checkerWorkflow);
 
         // Return the original entry
-        return toolDAO.getGenericEntryById(entryId);
+        Entry<? extends Entry, ? extends Version> genericEntry = toolDAO.getGenericEntryById(entryId);
+        Hibernate.initialize(genericEntry.getWorkflowVersions());
+        return genericEntry;
     }
 
     /**
